@@ -1,18 +1,15 @@
-<div>
-  <a href="{{ routes.collections_url }}">Go back to all collections</a>
-  {% paginate collection.products by section.settings.number_of_products_per_page %}
-    <h1>{{ collection.title }}</h1>
-    <div>
+<div class="container">
+  <div class="collection">
+    <h1 class="collection-title">{{ collection.title }}</h1>
+    <div class="collection-list">
       {% for product in collection.products %}
         {% render 'product-card', product_product: product %}
       {% else %}
         <p>There are no products in this collection</p>
       {% endfor %}
     </div>
-    {% render 'pagination', pagination: paginate %}
-  {% endpaginate %}
+  </div>
 </div>
-
 
 {% schema %}
 {

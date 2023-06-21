@@ -1,0 +1,41 @@
+{% assign se_stts = section.settings %}
+<div class="hero-image section{% if se_stts.layout == 'contain' %} container{% endif %}">
+  {% if se_stts.image == blank %}
+    {{ 'lifestyle-1' | placeholder_svg_tag }}
+  {% else %}
+    <img src="{{ se_stts.image | img_url: 'master' }}" alt=" {{ se_stts.image.alt | escape }}">
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Hero Image",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "label": "Full width",
+          "value": "full"
+        },
+        {
+          "label": "Contain",
+          "value": "contain"
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner"
+    }
+  ]
+}
+{% endschema %}
