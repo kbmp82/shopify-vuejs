@@ -1,9 +1,17 @@
+{{ 'hero_image.css' | asset_url | stylesheet_tag }}
 {% assign se_stts = section.settings %}
 <div class="hero-image section{% if se_stts.layout == 'contain' %} container{% endif %}">
   {% if se_stts.image == blank %}
     {{ 'lifestyle-1' | placeholder_svg_tag }}
   {% else %}
-    <img src="{{ se_stts.image | img_url: 'master' }}" alt=" {{ se_stts.image.alt | escape }}">
+    <img
+      src="{{ se_stts.image | img_url: 'master' }}"
+      data-src="{{ se_stts.image | img_url: 'master' }}"
+      data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+      data-sizes="auto"
+      data-parent-fit="cover"
+      alt="{{ se_stts.image.alt | escape }}"
+    >
   {% endif %}
 </div>
 

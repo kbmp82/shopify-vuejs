@@ -118,45 +118,6 @@
   padding: 10px 20px;
 }
 
-#upsells h1 {
-  margin-top: 100px;
-}
-
-.upsell-products {
-  display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.upsell-products .upsell-product {
-  width: 100%;
-  text-align: center;
-}
-
-.upsell-products .upsell-product > * {
-  margin-bottom: 20px;
-}
-
-.upsell-products .upsell-product img {
-  width: 100%;
-  border-radius: 18px;
-  object-fit: cover;
-  height: 200px;
-}
-
-.upsell-products .upsell-product button {
-  width: 100%;
-  max-width: 200px;
-  display: block;
-  text-align: center;
-  margin-inline: auto;
-  padding: 10px 20px;
-}
-
-.upsell-products .upsell-product button:hover {
-    cursor: pointer;
-}
-
 @media (min-width: 768px) {
   #cart-template .cart-headings {
     display: flex;
@@ -170,7 +131,7 @@
     flex-wrap: nowrap;
   }
 
-  #cart-template .cart-table .cart-row > div:not(.product):not(.total-price) {
+  #cart-template .cart-table .cart-row > div:not(.product) {
     margin-bottom: 50px;
   }
 

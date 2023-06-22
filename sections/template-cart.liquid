@@ -66,20 +66,6 @@
       <h1>Your cart is empty</h1>
       <a class="continue-shopping" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
     </template>
-    <template v-if="cart.upsells.length > 0">
-      {% unless section.settings.upsells == false %}
-        <div id="upsells">
-          <h1>You May Also Like...</h1>
-          <div class="upsell-products">
-            <div class="upsell-product" v-for="product in cart.upsells">
-              <h3>${ product.title }</h3>
-              <img :src="product.image" alt="">
-              <button>Add to Cart</button>
-            </div>
-          </div>
-        </div>
-      {% endunless %}
-    </template>
   </div>
 </div>
 {% style %}
@@ -102,36 +88,14 @@
      background-color: {{ section.settings.checkout_bg_clr_h }};
      color: {{ section.settings.checkout_fnt_clr_h }};
    }
-
-   #cart-template .upsell-products button {
-     background-color: {{ section.settings.checkout_bg_clr }};
-     color: {{ section.settings.checkout_fnt_clr }};
-   }
-
-   #cart-template .upsell-products button:hover {
-     background-color: {{ section.settings.checkout_bg_clr_h }};
-     color: {{ section.settings.checkout_fnt_clr_h }};
-   }
 {% endstyle %}
 <script>
-  
-  
-
   const CartTemplate = Vue.createApp({
     delimiters: ['${', '}'],
     data() {
       return {
         cart: {
           items: [],
-          upsells: [
-{% for product in collections['all'].products limit: 4 %}
-{
-  title: "{{ product.title }}",
-  image: "{{ product.featured_image | img_url: 'medium' }}",
-  price: "{{ product.price | money_with_currency }}"
-}{% unless forloop.last %},{% endunless %}
-{% endfor %}
-          ]
         },
       };
     },
@@ -192,20 +156,12 @@
       },
     },
   }).mount('#cart-template');
-
-
 </script>
 
 {% schema %}
 {
   "name": "Template Cart",
   "settings": [
-    {
-      "type": "checkbox",
-      "id": "upsells",
-      "label": "Show upsells",
-      "default": true
-    },
     {
       "type": "color",
       "id": "checkout_bg_clr",

@@ -76,11 +76,6 @@
 <script>
   
   
-  
-  
-  
-  
-  
     const ProductTemplate = Vue.createApp({
       delimiters: ['${', '}'],
       data() {
@@ -111,11 +106,11 @@
       },
       computed: {
         currentVariant(){
-          let current_variant = this.variants.find(variant => {
+          let currentVariant = this.variants.find(variant => {
             return variant.id == this.current_variant_id
             });
             
-           return current_variant;
+           return currentVariant;
         }
         
       },
@@ -125,8 +120,8 @@
             return variant.options.toString() == this.variant_selection.toString()
        });
        this.current_variant_id = current_variant.id;
-       this.current_variant_price = current_variant.price;
-       this.current_variant_compare_price = current_variant.compare_at_price;
+       //this.current_variant_price = current_variant.price;
+      // this.current_variant_compare_price = current_variant.compare_at_price;
        window.history.replaceState({}, '', `${this.product_url}?variant=${current_variant.id}`);
         },
      
@@ -162,11 +157,6 @@
         }, */
       },
     }).mount('#product-template');
-
-
-
-
-
 
 
 </script>
