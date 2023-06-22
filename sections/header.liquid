@@ -1,4 +1,5 @@
-{% liquid 
+{{ 'header.css' | asset_url | stylesheet_tag }}
+{% liquid
   if section.settings.menu.links == blank
     assign main_menu_linklist = linklists[section.settings.menu].links
   else
@@ -13,7 +14,7 @@
         {% assign link_handle = link.handle | replace: '-', '_' %}
         {% for childlink in link.links %}
           <a href="{{ childlink.url }}">{{ childlink.title }}</a>
-        {% endfor %}     
+        {% endfor %}
       {% else %}
         <a href="{{ link.url }}">{{ link.title }}</a>
       {% endif %}
@@ -22,9 +23,8 @@
       <input type="search" name="q" placeholder="Search">
       <button type="submit">Search</button>
     </form>
-  </nav>     
+  </nav>
 </header>
-        
 
 {% schema %}
 {

@@ -3,69 +3,73 @@
 <div id="cart-template">
   <div class="container">
     <h1>Your cart</h1>
-    <template v-if="cart.items.length > 0">
-      <form action="{{ routes.cart_url }}" method="post" novalidate>
-        <div class="cart-table">
-          <div class="cart-headings">
-            <span>Product</span>
-            <span>Price</span>
-            <span>Quantity</span>
-            <span>Total</span>
-          </div>
+    <transition name="fade">
+      <div v-show="!loading">
+        <template v-if="cart.items.length > 0">
+          <form action="{{ routes.cart_url }}" method="post" novalidate>
+            <div class="cart-table">
+              <div class="cart-headings">
+                <span>Product</span>
+                <span>Price</span>
+                <span>Quantity</span>
+                <span>Total</span>
+              </div>
 
-          <div class="cart-row" v-for="(item, index) in cart.items">
-            <div class="product">
-              <img :src="item.featured_image.url" :alt="item.featured_image.alt">
-              <div class="title">
-                <h3>${ item.title }</h3>
-                <div class="remove-item" @click="removeCartItem(index)">
-                  {% render 'icon_trash' %}
+              <div class="cart-row" v-for="(item, index) in cart.items">
+                <div class="product">
+                  <img :src="item.featured_image.url" :alt="item.featured_image.alt">
+                  <div class="title">
+                    <h3>${ item.title }</h3>
+                    <div class="remove-item" @click="removeCartItem(index)">
+                      {% render 'icon_trash' %}
+                    </div>
+                  </div>
+                </div>
+                <div class="price">${ formatPrice(item.price) }</div>
+                <div class="quantity">
+                  <input
+                    class="quantity"
+                    name="updates[]"
+                    type="number"
+                    min="0"
+                    v-model="cart.items[index].quantity"
+                    @change="updateCartItem(index)"
+                  >
+                </div>
+                <div class="total-price">${ formatPrice(item.final_line_price) }</div>
+              </div>
+              <div class="cart-footer">
+                <div class="subtotal-section">
+                  <div class="notes">
+                    <label for="cart_notes" class="my-1">Cart notes</label>
+                    <textarea
+                      name="note"
+                      id="cart_notes"
+                      cols="30"
+                      rows="5"
+                    ></textarea>
+                  </div>
+                  <div class="checkout-section">
+                    <div class="cart-subtotal"><span>Subtotal: </span>${ formatPrice(cart.total_price)}</div>
+                    <button
+                      type="submit"
+                      name="checkout"
+                      class="checkout-button"
+                    >
+                      Checkout
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="price">${ formatPrice(item.price) }</div>
-            <div class="quantity">
-              <input
-                class="quantity"
-                name="updates[]"
-                type="number"
-                min="0"
-                v-model="cart.items[index].quantity"
-                @change="updateCartItem(index)"
-              >
-            </div>
-            <div class="total-price">${ formatPrice(item.final_line_price) }</div>
-          </div>
-          <div class="cart-footer">
-            <div class="subtotal-section">
-              <div class="notes">
-                <label for="cart_notes" class="my-1">Cart notes</label>
-                <textarea
-                  name="note"
-                  id="cart_notes"
-                  cols="30"
-                  rows="5"
-                ></textarea>
-              </div>
-              <div class="checkout-section">
-                <div class="cart-subtotal"><span>Subtotal: </span>${ formatPrice(cart.total_price)}</div>
-                <button
-                  type="submit"
-                  name="checkout"
-                  class="checkout-button"
-                >
-                  Checkout
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-    </template>
-    <template v-else>
-      <h1>Your cart is empty</h1>
-      <a class="continue-shopping" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
-    </template>
+          </form>
+        </template>
+        <template v-else>
+          <h1>Your cart is empty</h1>
+          <a class="continue-shopping" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+        </template>
+      </div>
+    </transition>
   </div>
 </div>
 {% style %}
@@ -94,6 +98,7 @@
     delimiters: ['${', '}'],
     data() {
       return {
+        loading: true,
         cart: {
           items: [],
         },
@@ -114,6 +119,7 @@
           .then((response) => response.json())
           .then((json) => {
             this.cart = json;
+            this.loading = false;
           });
       },
       formatPrice(price) {

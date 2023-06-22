@@ -1,0 +1,177 @@
+.header {
+    padding: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+  
+  .header:after,
+  .breadcrumbs:after { 
+    content: "";
+    position: absolute;
+    left: 50%;
+    margin-left: -50vw;
+    width: 100vw;
+    height: 1px;
+    bottom: 0px;
+    background-color: rgb(0 0 0 / 15%);
+  }
+  
+  div.header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  div.header ul.nav-links .link {
+    position: relative;
+  }
+  
+  div.menu {
+      flex: 1;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      position: relative;
+  }
+  
+  div.header ul.nav-links,
+  div.header nav .account ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    padding-inline-start: 0;
+    justify-content: center;
+  }
+  
+  div.header nav .shop-icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    position: absolute;
+    right: 0;
+  }
+  
+  div.header ul.nav-links ul.child {
+    list-style: none;
+    padding-inline-start: 0;
+    position: absolute;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    max-height: 0px;
+    transition: all 0.3s linear;
+    box-shadow: 0px 0px 6px 0px #c3c3c3;
+    padding: 20px;
+    border-radius: 4px;
+    visibility: hidden;
+  }
+  
+  div.header ul.nav-links li.nested:hover > ul.child {
+    height: auto;
+    opacity: 1;
+    visibility: visible;
+    max-height: 200px;
+    background: white;
+    z-index: 9;
+  }
+  
+  div.header img {
+    width: 100%;
+    height: auto;
+  }
+  
+  div.header nav svg {
+    width: 100%;
+    max-width: 20px;
+    height: auto;
+  }
+  
+  div.header nav a:visited {
+    color: initial;
+  }
+  
+  svg.w-6.h-6.hamburger {
+    margin-top: 20px;
+    margin-right: 20px;
+    float: right;
+  }
+  
+  
+  @media (min-width: 1025px) {
+    svg.w-6.h-6.hamburger {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+      div.menu {
+          flex: unset;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          order: 3;
+          flex-wrap: wrap;
+          position: absolute;
+          left: 100%;
+          opacity: 0;
+          transition: .3s all linear;
+      }
+  
+      div.header nav.open div.menu {
+          left: 0;
+          opacity: 1;
+      }
+  
+    div.header ul.nav-links {
+      width: 100%;
+      order: 3;
+      flex-wrap: wrap;
+      background-color: rgb(0, 0, 0);
+      padding: 25px 0;
+    }
+  
+    div.header ul.nav-links a,
+    div.header ul.nav-links a:visited {
+      color: white;
+    }
+  
+    div.header nav .shop-icons {
+      flex: unset;
+      width: 100%;
+      justify-content: center;
+      order: 4;
+      background-color: rgb(228, 228, 228);
+      padding: 25px 0;
+      position: relative;
+    }
+  
+    div.header nav .shop-icons a,
+    div.header nav .shop-icons a:visited {
+      color: black;
+    }
+  
+    div.header ul.nav-links .link {
+      width: 100%;
+      text-align: center;
+    }
+  
+    div.header nav {
+      flex-wrap: wrap;
+    }
+  
+    div.header a.logo {
+      order: 1;
+      flex: unset;
+    }
+  
+    svg.w-6.h-6.hamburger {
+      order: 2;
+    }
+  
+    
+  }
+  
