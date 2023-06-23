@@ -1,0 +1,53 @@
+{% assign form_id = 'product-form-' | append: current_index %}
+<div class="product-card">
+  {% form 'product', product, id: form_id, novalidate: 'novalidate' %}
+    <div class="product-heading-section">
+      <a href="{{ product.url }}">
+        <h1>{{ product.title }}</h1>
+        <div class="img-wrap radius">
+          <img class="zoom" src="{{ product.featured_image | img_url: 'medium' }}">
+        </div>
+      </a>
+    </div>
+    <div class="product-info">
+      <div id="price-{{ product.id }}">
+        <span class="price" v-html="products[{{ current_index }}].price"></span>
+        <template v-if="products[{{ current_index }}].compare_at_price.length > 0">
+          <span class="compare-price" v-html="products[{{ current_index }}].compare_at_price"></span>
+        </template>
+      </div>
+      {% unless product.has_only_default_variant %}
+        <div class="variant-select">
+          {% for option in product.options_with_values %}
+            <div class="option-{{forloop.index}}">
+              <label
+                for="Option-{{ product.id }}-{{ forloop.index }}"
+              >
+                {{- option.name -}}
+              </label>
+              <select
+                name="options[{{ option.name | escape }}]"
+                id="Option-{{ product.id }}-{{ forloop.index }}"
+                v-model="products[{{ current_index }}].variant_selection[{{ option.position | minus: 1 }}]"
+                @change="onVariantChange({{ current_index }})"
+              >
+                {% for value in option.values %}
+                  <option
+                    value="{{ value | escape }}"
+                    {% if option.selected_value == value %}
+                      selected="selected"
+                    {% endif %}
+                  >
+                    {{ value }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+        </div>
+      {% endunless %}
+      <input type="hidden" name="id" :value="products[{{ current_index }}].current_variant_id">
+      <button class="atc-button">Add to Cart</button>
+    </div>
+  {% endform %}
+</div>

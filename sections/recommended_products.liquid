@@ -1,87 +1,29 @@
 {{ 'recommended_products.css' | asset_url | stylesheet_tag }}
+{{ 'product_card.css' | asset_url | stylesheet_tag }}
 <div id="recommended-products_{{ section.id }}">
-  <div class="container" v-if="upsells.length > 0">
-    <div class="upsells">
+  <div class="container" v-if="products.length > 0">
+    <div class="products">
       <h1>{{ section.settings.title }}</h1>
       <div class="upsell-products">
         {%- for product in collections[section.settings.sel_collection].products
           limit: section.settings.max_products
         -%}
           {% assign current_index = forloop.index0 %}
-          {% assign form_id = 'product-form-' | append: current_index %}
           <div class="upsell-product">
-            {% form 'product', product, id: form_id, novalidate: 'novalidate' %}
-              <div class="product-heading-section">
-                <h1>{{ product.title }}</h1>
-                <img src="{{ product.featured_image | img_url: 'medium' }}">
-              </div>
-              <div class="product-info">
-                <div id="price-{{ product.id }}">
-                  <span class="price" v-html="upsells[{{ current_index }}].price"></span>
-                  <template v-if="upsells[{{ current_index }}].compare_at_price.length > 0">
-                    <span class="compare-price" v-html="upsells[{{ current_index }}].compare_at_price"></span>
-                  </template>
-                </div>
-                {% unless product.has_only_default_variant %}
-                  <div class="variant-select">
-                    {% for option in product.options_with_values %}
-                      <div class="option-{{forloop.index}}">
-                        <label
-                          for="Option-{{ product.id }}-{{ forloop.index }}"
-                        >
-                          {{- option.name -}}
-                        </label>
-                        <select
-                          name="options[{{ option.name | escape }}]"
-                          id="Option-{{ product.id }}-{{ forloop.index }}"
-                          v-model="upsells[{{ current_index }}].variant_selection[{{ option.position | minus: 1 }}]"
-                          @change="onVariantChange({{ current_index }})"
-                        >
-                          {% for value in option.values %}
-                            <option
-                              value="{{ value | escape }}"
-                              {% if option.selected_value == value %}
-                                selected="selected"
-                              {% endif %}
-                            >
-                              {{ value }}
-                            </option>
-                          {% endfor %}
-                        </select>
-                      </div>
-                    {% endfor %}
-                  </div>
-                {% endunless %}
-                <input type="hidden" name="id" :value="upsells[{{ current_index }}].current_variant_id">
-                <button class="atc-button">Add to Cart</button>
-              </div>
-            {% endform %}
+            {% render 'product_card', product: product, current_index: current_index %}
           </div>
         {% endfor %}
       </div>
     </div>
   </div>
 </div>
-{% style %}
-  #recommended-products_{{ section.id }} button {
-     background-color: {{ section.settings.button_bg_clr }};
-     color: {{ section.settings.button_fnt_clr }};
-   }
-
-   #recommended-products_{{ section.id }} button:hover {
-     background-color: {{ section.settings.button_bg_clr_h }};
-     color: {{ section.settings.button_fnt_clr_h }};
-   }
-{% endstyle %}
 <script>
-  
-  
   
   const recommendedProducts = Vue.createApp({
     delimiters: ['${', '}'],
     data() {
       return {
-        upsells: [
+        products: [
             {%- for product in collections[section.settings.sel_collection].products limit: section.settings.max_products -%}
                 {
                     title: "{{ product.title }}",
@@ -118,7 +60,7 @@
       };
     },
     created(){
-        console.log(this.upsells)
+        console.log(this.products)
   },
     methods: {
       formatPrice(price) {
@@ -127,16 +69,17 @@
       },
       onVariantChange(index){
        
-            let currentVariant = this.upsells[index].variants.find(variant =>{
-                return variant.options.toString() === this.upsells[index].variant_selection.toString()
+            let currentVariant = this.products[index].variants.find(variant =>{
+                return variant.options.toString() === this.products[index].variant_selection.toString()
             });
-        this.upsells[index].price = currentVariant.price;
-        this.upsells[index].compare_at_price = currentVariant.compare_at_price
-        this.upsells[index].current_variant_id = currentVariant.id
+        this.products[index].price = currentVariant.price;
+        this.products[index].compare_at_price = currentVariant.compare_at_price
+        this.products[index].current_variant_id = currentVariant.id
         }
     }
 
   }).mount('#recommended-products_{{ section.id }}');
+
 
 </script>
 
@@ -162,34 +105,6 @@
       "max": 8,
       "min": 3,
       "default": 4
-    },
-    {
-      "type": "color",
-      "id": "button_bg_clr",
-      "label": "Button color",
-      "default": "#000"
-    },
-    {
-      "type": "color",
-      "id": "button_fnt_clr",
-      "label": "Button font color",
-      "default": "#fff"
-    },
-    {
-      "type": "paragraph",
-      "content": "Hover"
-    },
-    {
-      "type": "color",
-      "id": "button_bg_clr_h",
-      "label": "Button color",
-      "default": "#000"
-    },
-    {
-      "type": "color",
-      "id": "button_fnt_clr_h",
-      "label": "Button font color",
-      "default": "#fff"
     }
   ],
   "presets": [

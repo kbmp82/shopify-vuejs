@@ -1,11 +1,5 @@
 {
   "sections": {
-    "store-name": {
-      "type": "store-name",
-      "settings": {
-        "store_name": "Store Name"
-      }
-    },
     "featured-collection": {
       "type": "featured-collection",
       "disabled": true,
@@ -18,7 +12,7 @@
     "0bc5ed91-cbea-4f44-9bc6-02f6c115ab67": {
       "type": "hero_image",
       "settings": {
-        "layout": "contain",
+        "layout": "full",
         "image": "shopify:\/\/shop_images\/pexels-abhinav-goswami-674804.jpg"
       }
     },
@@ -36,7 +30,6 @@
     }
   },
   "order": [
-    "store-name",
     "featured-collection",
     "0bc5ed91-cbea-4f44-9bc6-02f6c115ab67",
     "5c9b75f8-fb01-4923-a0f7-58cd081e5630"

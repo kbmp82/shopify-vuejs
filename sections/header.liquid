@@ -1,40 +1,122 @@
 {{ 'header.css' | asset_url | stylesheet_tag }}
-{% liquid
-  if section.settings.menu.links == blank
-    assign main_menu_linklist = linklists[section.settings.menu].links
-  else
-    assign main_menu_linklist = section.settings.menu.links
-  endif
-%}
+{% assign se_stts = section.settings %}
+{% assign sid = section.id %}
+<div class="header">
+  <div class="container">
+    <nav class="">
+      <a href="{{ routes.root_url }}" class="logo">
+        {% if se_stts.logo != blank %}
+          <img
+            class=""
+            src="{{ se_stts.logo | image_url: width: se_stts.logo.width }}"
+            alt="{{ se_stts.logo.alt | escape }}"
+          >
+        {% else %}
+          {{ shop.name }}
+        {% endif %}
+      </a>
 
-<header id="header" class="header">
-  <nav role="navigation">
-    {% for link in main_menu_linklist %}
-      {% if link.links != blank %}
-        {% assign link_handle = link.handle | replace: '-', '_' %}
-        {% for childlink in link.links %}
-          <a href="{{ childlink.url }}">{{ childlink.title }}</a>
-        {% endfor %}
-      {% else %}
-        <a href="{{ link.url }}">{{ link.title }}</a>
-      {% endif %}
-    {% endfor %}
-    <form action="{{ routes.search_url }}" method="get">
-      <input type="search" name="q" placeholder="Search">
-      <button type="submit">Search</button>
-    </form>
-  </nav>
-</header>
+      <!-- navigation -->
+      <div class="menu">
+        <ul class="nav-links">
+          {% for link in linklists[se_stts.menu].links -%}
+            <div class="link relative">
+              <li class="{% if link.links != blank %}nested{% endif %}">
+                {{ link.title | link_to: link.url }}
+                {% if link.links != blank %}
+                  {% for child in link.links -%}
+                    <ul class="child">
+                      <li>
+                        {{ child.title | link_to: child.url }}
+                      </li>
+                    </ul>
+                  {% endfor %}
+                {% endif %}
+              </li>
+            </div>
+          {%- endfor %}
+        </ul>
+        <div class="shop-icons">
+          <a href="{{ routes.cart_url }}">{% render 'icon_cart' %}</a>
+          {% unless shop.customer_accounts_enabled == false %}
+            <div class="account">
+              {%- if shop.customer_accounts_enabled -%}
+                <ul>
+                  {%- if customer -%}
+                    <li>
+                      <a href="{{ routes.account_url }}" id="customer_login_link">
+                        {%- render : 'icon_user', type: "standard" -%}
+                      </a>
+                    </li>
+                    <li>
+                      {{ 'Log out' | customer_logout_link }}
+                    </li>
+                  {%- else -%}
+                    <li>
+                      <a href="{{ routes.account_login_url}}" id="customer_login_link">Log In</a>
+                    </li>
+                    <li>
+                      {{ 'Create account' | customer_register_link }}
+                    </li>
+                  {%- endif -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {% endunless %}
+        </div>
+      </div>
+      <!-- mobile hamburger -->
+      {% render 'icon_hamburger' %}
+    </nav>
+  </div>
+</div>
+{% style %}
+    div.header {
+      min-height: {{ se_stts.header_height }};
+    }
 
+    div.header a > img {
+      width: 100%;
+      max-width: {{ se_stts.max_width }};
+    }
+
+  @media(min-width: 1025px){
+     div.header ul.nav-links {
+      margin-left: -{{ se_stts.max_width }};
+    }
+  }
+  @media(max-width: 1024px){
+    div.header div.menu {
+      top: {{ se_stts.header_height }};
+    }
+  }
+{% endstyle %}
 {% schema %}
 {
   "name": "Header",
   "settings": [
     {
+      "type": "text",
+      "id": "header_height",
+      "default": "150px",
+      "label": "Header Height"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "max_width",
+      "default": "200px",
+      "label": "Max width"
+    },
+    {
       "type": "link_list",
       "id": "menu",
-      "default": "main-menu",
-      "label": "Heading Navigation Menu"
+      "label": "Main menu",
+      "default": "main-menu"
     }
   ]
 }

@@ -20,6 +20,7 @@
   }
   
   div.header nav {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,7 +41,7 @@
   div.header ul.nav-links,
   div.header nav .account ul {
     display: flex;
-    gap: 15px;
+    gap: 50px;
     list-style: none;
     padding-inline-start: 0;
     justify-content: center;
@@ -100,6 +101,10 @@
     float: right;
   }
   
+  div.header nav a:not(.logo):hover,
+  div.header nav svg:hover {
+    opacity: 0.8;
+}
   
   @media (min-width: 1025px) {
     svg.w-6.h-6.hamburger {

@@ -1,0 +1,35 @@
+#footer {
+    padding: 50px 0 0;
+    overflow: hidden;
+    border-top: 1px solid #efefef;
+}
+
+#footer .footer-top {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 0;
+    gap: 50px;
+}
+
+#footer .footer-bottom {
+    text-align: center;
+    border-top: 1px solid #efefef;
+    padding: 25px 0;
+}
+
+#footer .footer-menu li {
+    margin-bottom: 20px;
+}
+
+#footer .footer-menu li a:not(.logo):hover {
+    opacity: 0.8;
+}
+
+@media(min-width:1025px){
+    #footer .footer-menu {
+        display: flex;
+        gap: 25px;
+    }
+}

@@ -1,7 +1,7 @@
 [id*="recommended-products_"]{
   margin: 100px 0;
 }
-.upsells h1{
+.products h1{
   font-size: 30px;
   font-weight: bold;
   text-align: center;
@@ -13,7 +13,7 @@
   gap: 25px;
   flex-wrap: wrap;
 }
-
+/*
 .upsell-products .upsell-product {
   width: 100%;
   text-align: center;
@@ -30,7 +30,6 @@
 
 .upsell-products .upsell-product img {
   width: 100%;
-  border-radius: 18px;
   object-fit: cover;
   height: 280px;
 }
@@ -81,6 +80,10 @@
   margin-bottom: 5px;
 }
 
+div.img-wrap {
+  overflow: hidden;
+}
+ */
 @media (min-width: 768px) {
   .upsell-products .upsell-product {
     flex: 1 calc(25% - 25px);
@@ -90,7 +93,8 @@
     min-height: 500px;
     position: relative;
   }
-  .upsell-products .upsell-product img {
+  .upsell-products .upsell-product img,
+  div.img-wrap {
     max-width: 280px;
     margin-inline: auto;
   }

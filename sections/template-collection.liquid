@@ -1,23 +1,100 @@
-<div class="container">
-  <div class="collection">
-    <h1 class="collection-title">{{ collection.title }}</h1>
-    <div class="collection-list">
-      {% for product in collection.products %}
-        {% render 'product-card', product_product: product %}
-      {% else %}
-        <p>There are no products in this collection</p>
-      {% endfor %}
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+{{ 'product_card.css' | asset_url | stylesheet_tag }}
+<div id="collection_page">
+  <div class="container">
+    <div class="collection">
+      <h1 class="collection-title">{{ collection.title }}</h1>
+      <div class="collection-list">
+        {% for product in collection.products limit: section.settings.max_products %}
+          {% assign current_index = forloop.index0 %}
+          {% render 'product_card', product: product, current_index: current_index %}
+        {% else %}
+          <p>There are no products in this collection</p>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
+<script>
+  
+const recommendedProducts = Vue.createApp({
+  delimiters: ['${', '}'],
+  data() {
+    return {
+      products: [
+        {% for product in collection.products limit: section.settings.max_products %}
+              {
+                  title: "{{ product.title }}",
+                  image: "{{ product.featured_image | img_url: 'medium'  }}",
+                  variant_selection: [
+                      {%- for option in product.options_with_values -%}
+                      "{{ option.selected_value }}"
+                      {% unless forloop.last %},{% endunless %}
+                      {%- endfor -%}
+                      ],
+                  variants: [
+                      {%- unless product.has_only_default_variant -%}
+                      {%- for variant in product.variants -%}
+                          {
+                              id: "{{ variant.id }}",
+                              available: {{ variant.available }},
+                              options: [{% for option in variant.options %}"{{ option }}"{% unless forloop.last %},{% endunless %}{% endfor %}],
+                              option_names: [{% for option in product.options_with_values %}"{{ option.name }}"{% unless forloop.last %},{% endunless %}{% endfor %}],
+                              price: "{{ variant.price | money }}",
+                              compare_at_price: "{{ variant.compare_at_price | money }}",
+                            }
+                      {%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}
+                      {%- endunless -%}
+                          ],
+                  price: "{{ product.price  | money }}",
+                  compare_at_price: "{{ product.compare_at_price | money }}",
+                  id: "{{ product.id }}",
+                  current_variant_id: "{{ product.selected_or_first_available_variant.id }}"
+              }
+      {%- unless forloop.last -%},{%- endunless -%}
 
+          {%- endfor -%}
+      ],
+    };
+  },
+  created(){
+      console.log(this.products)
+},
+  methods: {
+    formatPrice(price) {
+    let priceAsNum = parseInt(price);
+      return `$${(priceAsNum / 100).toFixed(2)}`;
+    },
+    onVariantChange(index){
+     
+          let currentVariant = this.products[index].variants.find(variant =>{
+              return variant.options.toString() === this.products[index].variant_selection.toString()
+          });
+      this.products[index].price = currentVariant.price;
+      this.products[index].compare_at_price = currentVariant.compare_at_price
+      this.products[index].current_variant_id = currentVariant.id
+      }
+  }
+
+}).mount('#collection_page');
+
+
+
+
+
+
+
+
+
+
+</script>
 {% schema %}
 {
   "name": "Template Collection",
   "settings": [
     {
       "type": "number",
-      "id": "number_of_products_per_page",
+      "id": "max_products",
       "default": 6,
       "label": "Number of products per page"
     }

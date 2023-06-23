@@ -1,3 +1,35 @@
 [
-
+    {
+        "name": "Buttons",
+        "settings": [
+    {
+        "type": "color",
+        "id": "button_bg_clr",
+        "label": "Button color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "button_fnt_clr",
+        "label": "Button font color",
+        "default": "#fff"
+      },
+      {
+        "type": "paragraph",
+        "content": "Hover"
+      },
+      {
+        "type": "color",
+        "id": "button_bg_clr_h",
+        "label": "Button color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "button_fnt_clr_h",
+        "label": "Button font color",
+        "default": "#fff"
+      }
+    ]
+    }
 ]

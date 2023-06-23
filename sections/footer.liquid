@@ -1,3 +1,82 @@
+{{ 'footer.css' | asset_url | stylesheet_tag }}
 <footer id="footer" class="footer">
-  Footer
+  <div class="container">
+    <div class="footer-top">
+      {% unless section.settings.img == blank %}
+        {% assign width = section.settings.max_w | default: section.settings.img.width %}
+        <img
+          src="{{ section.settings.img | image_url: width: width }}"
+          alt="{{ section.settings.img.alt | escape }}"
+          loading="lazy"
+          class="logo"
+        >
+      {% endunless %}
+      <div class="footer-menu">
+        {% for link in linklists[section.settings.menu].links -%}
+          <div class="link relative">
+            <li class="{% if link.links != blank %}nested{% endif %}">
+              {{ link.title | link_to: link.url }}
+              {% if link.links != blank %}
+                {% for child in link.links -%}
+                  <ul class="child">
+                    <li>
+                      {{ child.title | link_to: child.url }}
+                    </li>
+                  </ul>
+                {% endfor %}
+              {% endif %}
+            </li>
+          </div>
+        {%- endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">Copyright 2023 - {{ shop.name }}</div>
 </footer>
+{% style %}
+  #footer {
+    background-color: {{ section.settings.bg }};
+  }
+
+  #footer > * {
+    color: {{ section.settings.fnt_clr }};
+  }
+    #footer .footer-top img {
+      max-width: {{ section.settings.max_w }};
+    }
+{% endstyle %}
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "max_w",
+      "label": "Max width"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "fnt_clr",
+      "label": "Font color",
+      "default": "#fff"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

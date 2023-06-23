@@ -73,21 +73,13 @@
   </div>
 </div>
 {% style %}
-  #cart-template .checkout-button {
+  #cart-template .checkout-button,
+  #cart-template .continue-shopping {
      background-color: {{ section.settings.checkout_bg_clr }};
      color: {{ section.settings.checkout_fnt_clr }};
    }
 
-   #cart-template .checkout-button:hover {
-     background-color: {{ section.settings.checkout_bg_clr_h }};
-     color: {{ section.settings.checkout_fnt_clr_h }};
-   }
-
-   #cart-template .continue-shopping {
-     background-color: {{ section.settings.checkout_bg_clr }};
-     color: {{ section.settings.checkout_fnt_clr }};
-   }
-
+   #cart-template .checkout-button:hover,
    #cart-template .continue-shopping:hover {
      background-color: {{ section.settings.checkout_bg_clr_h }};
      color: {{ section.settings.checkout_fnt_clr_h }};

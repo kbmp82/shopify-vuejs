@@ -1,42 +1,42 @@
-
 .product-template {
-    padding-top: 25px;
-  }
-  .product-template label {
-    padding-right: 10px;
-  }
-  
-  .product-template input {
-    max-width: 70px;
-    text-align: center;
-  }
-  
-  .product-template .product-wrap {
-    display: grid;
-    gap: 25px;
-    grid-template-columns: 60% 40%;
-    align-items: center;
-  }
-  
-  .product-template .product-wrap > div {
-    height: 100%;
-  }
-  
-  .product-template form {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    height: 100%;
-  }
-  
-  .product-template .atc-button {
-    padding: 10px 25px;
-  }
-  
-  .product-template .atc-button:hover {
-    cursor: pointer;
-  }
-  
-  .product-template #variant_select > div {
-    margin-bottom: 10px;
-  }
+  padding: 50px 0;
+}
+
+.product-template label {
+  padding-right: 10px;
+}
+
+.product-template input {
+  max-width: 70px;
+  text-align: center;
+}
+
+.product-template .product-wrap {
+  display: grid;
+  gap: 25px;
+  grid-template-columns: 60% 40%;
+  align-items: center;
+}
+
+.product-template .product-wrap > div {
+  height: 100%;
+}
+
+.product-template form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 100%;
+}
+
+.product-template .atc-button {
+  padding: 10px 25px;
+}
+
+.product-template .atc-button:hover {
+  cursor: pointer;
+}
+
+.product-template #variant_select > div {
+  margin-bottom: 10px;
+}

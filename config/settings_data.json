@@ -1,5 +1,30 @@
 {
   "current": {
+    "button_bg_clr_h": "#4b4b4b",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "header_height": "150px",
+          "logo": "shopify:\/\/shop_images\/logo.png",
+          "max_width": "220px",
+          "menu": "main-menu"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "img": "shopify:\/\/shop_images\/logo-removebg-preview.png",
+          "max_w": "150px",
+          "bg": "#f5f5f5",
+          "fnt_clr": "#4b4b4b",
+          "menu": "main-menu"
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
   },
   "presets": {
     "Default": {
