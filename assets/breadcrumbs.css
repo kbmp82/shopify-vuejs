@@ -1,0 +1,32 @@
+.breadcrumbs {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.breadcrumbs > .container {
+    margin-inline: auto;
+    width:1005;
+    padding: 10px;
+}
+
+.breadcrumbs .breadcrumb-routes {
+ display: flex;
+ align-items: center;
+ gap:10px;
+} 
+
+.breadcrumbs .breadcrumb-routes svg {
+    max-height: 15px;
+}
+
+.breadcrumbs .breadcrumb-routes a,
+.breadcrumbs .breadcrumb-routes {
+    font-size: 14px;
+}
+
+@media(min-width: 768px){
+    .breadcrumbs > .container {
+        padding: 10px 0;
+    }
+}

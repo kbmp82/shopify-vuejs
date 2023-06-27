@@ -1,0 +1,38 @@
+{{ 'breadcrumbs.css' | asset_url | stylesheet_tag }}
+<div class="breadcrumbs">
+  <div class="container">
+    <nav class="breadcrumb-routes" role="navigation" aria-label="navigation">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>{% render 'icon_chevron' %}</span>
+      {% if collection.url -%}
+        <a href="{{ routes.collections_url }}">Collections</a>
+        <span>{% render 'icon_chevron' %}</span>
+        <span>{{ collection.title }}</span>
+      {% elsif template == 'list-collections' %}
+        <span>Collections</span>
+      {% elsif product.url %}
+        <a href="{{ routes.all_products_collection_url }}">Products</a>
+        <span>{% render 'icon_chevron' %}</span>
+        <span>{{ product.title }}</span>
+      {% elsif page.url %}
+        <span>{{ page.title }}</span>
+      {% elsif blog.url %}
+        {% if article.url %}
+          <a href="{{ blog.url }}">{{ blog.title }}</a>
+          <span>{% render 'icon_chevron' %}</span>
+          <span>{{ article.title }}</span>
+        {% else %}
+          <span>{{ blog.title }}</span>
+        {% endif %}
+      {% elsif template == 'cart' %}
+        Cart
+      {% endif %}
+    </nav>
+  </div>
+</div>
+{% style %}
+  .breadcrumbs {
+    background-color: {{ settings.breadcrumbs_bg_color }};
+    color: {{ settings.breadcrumbs_fnt_color }};
+  }
+{% endstyle %}

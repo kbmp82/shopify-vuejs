@@ -1,0 +1,16 @@
+.contact > form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    margin-inline: auto;
+    gap: 20px;
+}
+
+.contact > form .field > * {
+    width:100%;
+}
+
+.contact > form .field > input {
+    min-height:30px;
+}

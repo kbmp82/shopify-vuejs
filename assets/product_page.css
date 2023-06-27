@@ -40,3 +40,51 @@
 .product-template #variant_select > div {
   margin-bottom: 10px;
 }
+
+.product-summary h1 {
+  font-size: 20px;
+}
+
+.product-template .vendor {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.product-template .price {
+  position: relative;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.product-template .price .current-price {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.product-template .price .compare {
+  text-decoration: line-through;
+  font-size: 20px;
+  font-weight: 400;
+}
+.product-template .sale-callout {
+  border-radius: 50%;
+  background-color: red;
+  width:50px;
+  height: 50px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+}
+
+div#variant-select > div {
+  margin-bottom: 10px;
+}
+
+@media(min-width: 768px) {
+  .product-summary h1 {
+    font-size: 30px;
+}
+}

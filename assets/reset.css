@@ -20,6 +20,8 @@ body {
   font-size: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
@@ -160,11 +162,16 @@ select {
   text-transform: none;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
+  padding: 10px 20px;
 }
 
 button::-moz-focus-inner,
@@ -261,7 +268,6 @@ q:after {
 svg {
   width: 100%;
   display: block;
-  fill: currentColor;
 }
 
 ::-moz-selection {

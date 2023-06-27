@@ -45,6 +45,9 @@
   <body>
     {% section 'header' %}
     <main id="main" class="main" role="main" tabindex="-1">
+      {% unless template.name == 'index' or template.name == 'page' %}
+        {% render 'breadcrumbs' %}
+      {% endunless %}
       {{ content_for_layout }}
     </main>
     {% section 'footer' %}

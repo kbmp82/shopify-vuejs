@@ -12,15 +12,17 @@
         {% for block in section.blocks %}
           {% case block.type %}
             {% when 'vendor' %}
-              {{ product.vendor }}
+              <div class="vendor">
+                {{ product.vendor }}
+              </div>
             {% when 'title' %}
               <h1>{{ product.title }}</h1>
             {% when 'price' %}
-              <div id="price-{{ section.id }}">
-                <span v-html="currentVariant.price"></span>
-                <span v-html="currentVariant.compare_at_price"></span>
+              <div id="price-{{ section.id }}" class="price">
+                <span v-html="currentVariant.price" class="current-price"></span>
+                <span v-html="currentVariant.compare_at_price" class="compare"></span>
                 {% if selected_variant.price < selected_variant.compare_at_price %}
-                  <span>Sale</span>
+                  <span class="sale-callout">Sale</span>
                 {% endif %}
               </div>
             {% when 'variant_selector' %}
@@ -74,6 +76,10 @@
   </div>
 </div>
 <script>
+  
+  
+  
+  
   
   
     const ProductTemplate = Vue.createApp({
@@ -157,6 +163,10 @@
         }, */
       },
     }).mount('#product-template');
+
+
+
+
 
 
 </script>
