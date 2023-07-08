@@ -23,8 +23,6 @@
   
   
   
-  
-
   const RecommendedProductsOptions ={
     store,
     delimiters: ['${', '}'],
@@ -86,7 +84,12 @@
             quantity: 1,
           };
          
-            store.dispatch('addItemToCart', data);
+            store.dispatch('addItemToCart', data)
+            .then(()=>{
+              setTimeout(()=>{
+                store.dispatch('openMiniCart');
+              }, 1000)
+              })
         }
     }
 
@@ -94,8 +97,6 @@
   const RecommendedProducts =  Vue.createApp(RecommendedProductsOptions);
   RecommendedProducts.mount('#recommended-products_{{ section.id }}');
   RecommendedProducts.use(store);
-
-
 
 
 

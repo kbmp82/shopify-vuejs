@@ -1,0 +1,98 @@
+
+.minicart {
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    right: -450px;
+    z-index: 9;
+    box-shadow: -2px 0px 11px 0px #00000066;
+    transition: right .3s ease-in-out;
+    overflow-y: scroll;
+}
+
+.minicart.open {
+    right: 0;
+}
+
+.minicart svg {
+    width: 32px;
+}
+
+.minicart .remove-item svg {
+    width: 20px;
+}
+
+.minicart .remove-item svg:hover {
+    width: 20px;
+}
+
+.closeCart {
+   order: 2;
+}
+.minicart svg:hover {
+    cursor: pointer;
+    width: 33px;
+}
+.minicart svg:hover path {
+    stroke: white;
+    fill: black;
+}
+.minicart-header {
+    position: relative;
+    min-height: 50px;
+    border-bottom: 1px solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.minicart .cart-item-row {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    border-bottom: 1px solid #efefef;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+  
+  .minicart .cart-item-row img {
+    width: 100%;
+    margin-inline: auto;
+    border-radius: 18px;
+    height: 70px;
+    max-width: 70px;
+    object-fit: cover;
+  }
+  
+  .minicart .cart-item-row .product > * {
+    margin-bottom: 20px;
+  }
+
+  .minicart .cart-item-row input {
+    width: 50px;
+    text-align: center;
+  }
+  .minicart-items {
+    padding: 20px;
+  }
+
+  .minicart .product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.minicart .checkout-section {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.cart-subtotal {
+    text-align: right;
+}

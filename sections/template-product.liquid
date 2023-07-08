@@ -58,13 +58,13 @@
                 </div>
                 <div id="product-quantity">
                   <label for="Quantity">Quantity</label>
-                  <input id="quantity" type="number" min="1" value="1" name="quantity">
+                  <input id="quantity" type="number" min="1" v-model="quantity" name="quantity">
                 </div>
               {% endunless %}
               {% comment %} {% render 'product_form' %} {% endcomment %}
             {% when 'checkout_buttons' %}
               <input type="hidden" name="id" :value="current_variant_id">
-              <button class="atc-button">Add to Cart</button>
+              <button @click.prevent="addToCart(current_variant_id)" class="atc-button">Add to Cart</button>
             {% when 'description' %}
               {{ product.description }}
             {% else %}
@@ -77,11 +77,11 @@
 </div>
 <script>
   
-
     const ProductTemplate = Vue.createApp({
       delimiters: ['${', '}'],
       data() {
         return {
+          quantity: 1,
           current_variant_id: {{ selected_variant.id }},
           product_url: "{{ product.url }}",
             variant_selection: [
@@ -126,7 +126,21 @@
       // this.current_variant_compare_price = current_variant.compare_at_price;
        window.history.replaceState({}, '', `${this.product_url}?variant=${current_variant.id}`);
         },
+        addToCart(variant){
+          let data = {
+            id: variant,
+            quantity: this.quantity,
+          };
+         
+            store.dispatch('addItemToCart', data)
+            .then(()=>{
+              setTimeout(()=>{
+                store.dispatch('openMiniCart');
+              }, 1000)
+              })
+        }
       },
+
     }).mount('#product-template');
 
 </script>

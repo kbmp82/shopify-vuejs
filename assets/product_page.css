@@ -11,6 +11,11 @@
   text-align: center;
 }
 
+.product-template img {
+max-height: 600px;
+object-fit: cover;
+}
+
 .product-template .product-wrap {
   display: grid;
   gap: 25px;

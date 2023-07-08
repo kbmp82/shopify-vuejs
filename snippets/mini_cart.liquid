@@ -1,0 +1,99 @@
+{{ 'mini_cart.css' | asset_url | stylesheet_tag }}
+<div id="minicart">
+  <div class="minicart" :class="{'open' : miniCart}">
+    <div class="minicart-header">
+      <div class="closeCart" @click="closeMiniCart">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="{1.5}"
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <span>You have ${cartTotal} items in your cart</span>
+    </div>
+    <div class="minicart-items">
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div class="cart-item-row" v-for="(item, index) in cart.items">
+          <div class="product">
+            <img :src="item.featured_image.url" :alt="item.featured_image.alt">
+          </div>
+          <div class="product-details">
+            <h3>${ item.title }</h3>
+            <div class="price">${ item.price } x ${cart.items[index].quantity}</div>
+            <div class="quantity">
+              <input
+                class="quantity"
+                name="updates[]"
+                type="number"
+                min="0"
+                v-model="cart.items[index].quantity"
+                @change="updateCartItem(index)"
+              >
+            </div>
+            <div class="total-price">${ item.final_line_price }</div>
+            <div class="remove-item" @click="removeCartItem(index)">
+              {% render 'icon_trash' %}
+            </div>
+          </div>
+        </div>
+        <div class="cart-footer">
+          <div class="subtotal-section">
+            <div class="checkout-section">
+              <div class="cart-subtotal"><span>Subtotal: </span>${ cart.items_subtotal_price}</div>
+              <button
+                type="submit"
+                name="checkout"
+                class="checkout-button"
+              >
+                Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  const MiniCartOptions = {
+    store,
+    delimiters: ['${', '}'],
+    data() {
+      return {};
+    },
+    created() {
+      // store.dispatch('closeMiniCart');
+    },
+    methods: {
+      closeMiniCart() {
+        store.dispatch('closeMiniCart');
+      },
+      updateCartItem(index) {
+        store.dispatch('updateCart', index);
+      },
+      removeCartItem(index) {
+        store.dispatch('removeCartItem', index);
+      },
+    },
+    computed: {
+      miniCart() {
+        return store.getters.miniCart;
+      },
+      cartTotal() {
+        return store.getters.cartTotal;
+      },
+      cart() {
+        return store.getters.cart;
+      },
+    },
+  };
+
+  const MiniCart = Vue.createApp(MiniCartOptions);
+  MiniCart.mount('#minicart');
+  MiniCart.use(store);
+</script>

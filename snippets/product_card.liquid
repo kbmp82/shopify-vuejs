@@ -47,17 +47,13 @@
         </div>
       {% endunless %}
       <input type="hidden" name="id" :value="products[{{ current_index }}].current_variant_id">
-      {% if template == 'cart' %}
-        <button
-          @click.prevent="addToCart(products[{{ current_index }}].current_variant_id)"
-          type="button"
-          class="atc-button"
-        >
-          Add to Cart
-        </button>
-      {% else %}
-        <button type="submit" class="atc-button">Add to Cart</button>
-      {% endif %}
+      <button
+        @click.prevent="addToCart(products[{{ current_index }}].current_variant_id)"
+        type="button"
+        class="atc-button"
+      >
+        Add to Cart
+      </button>
     </div>
   {% endform %}
 </div>

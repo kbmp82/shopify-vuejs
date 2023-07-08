@@ -4,6 +4,7 @@ const store = Vuex.createStore({
       cart: {
         items: [],
       },
+      miniCartOpen: true
     };
   },
   mutations: {
@@ -17,6 +18,9 @@ const store = Vuex.createStore({
       });
       state.cart = cart;
     },
+    SET_MINI_CART(state, miniCartOpen){
+        state.miniCartOpen = miniCartOpen;
+    }
   },
   actions: {
     getCart({ commit }) {
@@ -87,6 +91,12 @@ const store = Vuex.createStore({
           console.log(err);
         });
     },
+    closeMiniCart({commit}){
+        commit("SET_MINI_CART", false);
+    },
+    openMiniCart({commit}){
+        commit("SET_MINI_CART", true);
+    }
   },
   getters: {
     cart: (state) => {
@@ -100,6 +110,9 @@ const store = Vuex.createStore({
         })
 
         return total;
+    },
+    miniCart: (state) => {
+        return state.miniCartOpen;
     }
   },
 });
