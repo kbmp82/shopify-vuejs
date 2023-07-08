@@ -21,11 +21,7 @@
       "settings": {
         "title": "Best Sellers",
         "sel_collection": "bird-houses",
-        "max_products": 4,
-        "button_bg_clr": "#000000",
-        "button_fnt_clr": "#ffffff",
-        "button_bg_clr_h": "#454545",
-        "button_fnt_clr_h": "#ffffff"
+        "max_products": 4
       }
     }
   },

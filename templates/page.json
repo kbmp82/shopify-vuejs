@@ -13,5 +13,8 @@
       "type": "template-page"
     }
   },
-  "order": ["heading","template"]
+  "order": [
+    "heading",
+    "template"
+  ]
 }

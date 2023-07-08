@@ -140,8 +140,10 @@
   }
 
   #cart-template .cart-table .cart-row img {
-    max-width: 200px;
-  }
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
 
   #cart-template .cart-table .cart-row .title {
     justify-content: center;

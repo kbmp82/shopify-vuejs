@@ -1,0 +1,113 @@
+<div class="max-w-6xl mx-auto px-4 py-12">
+  <div class="flex items-start md:items-end justify-between my-5">
+    <div class="w-1/2">
+      <h1 class="text-2xl font-bold text-gray-700">Order {{ order.name }}</h1>
+      <p class="text-gray-500 my-2">Placed on {{ order.created_at | date: format: 'date' }}</p>
+      <span class="text-sm bg-gray-700 text-white rounded-full my-2 px-4 py-1">
+        {{ order.financial_status_label }}
+      </span>
+    </div>
+    <a href="{{ routes.account_url }}" class="text-sm text-blue-500 hover:text-blue-900 underline">Back to account</a>
+  </div>
+
+  {% for item in order.line_items %}
+    <div class="border w-full border-gray-200 divide-y rounded-sm mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-12 p-4 md:p-12">
+        <div class="w-full h-80 min-h-80 bg-gray-200 rounded-md overflow-hidden border">
+          {% if item.image %}
+            <img
+              class="w-full h-full object-cover object-center"
+              src="{{ item.image |img_url: 'medium' }}"
+              alt="{{ item.image.alt | escape }}"
+            >
+          {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover object-center' }}
+          {% endif %}
+        </div>
+        <div>
+          <h1 class="text-xl font-medium mb-4">{{ item.title | link_to: item.product.url }}</h1>
+          <table class="table-auto w-full mb-4">
+            <tbody>
+              <tr>
+                <td class="border border-gray-200 px-4 py-2">Price</td>
+                <td class="border border-gray-200 px-4 py-2">{{ item.original_price | money }}</td>
+              </tr>
+              <tr>
+                <td class="border border-gray-200 px-4 py-2">Quantity</td>
+                <td class="border border-gray-200 px-4 py-2">{{ item.quantity }}</td>
+              </tr>
+              <tr>
+                <td class="border border-gray-200 px-4 py-2">Final Price</td>
+                <td class="border border-gray-200 px-4 py-2">{{ item.final_line_price | money }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-gray-500 mb-4">
+            {{ item.product.description | truncatewords: 150 }}
+          </div>
+        </div>
+        <div>
+          <h2 class="text-xl font-medium mb-4">Delivery Address</h2>
+          {{ order.shipping_address | format_address }}
+        </div>
+      </div>
+      <div class="p-4 md:p-12">
+        <h2 class="text-lg font-medium mb-4">Fulfillment Status</h2>
+        {% if item.successfully_fulfilled_quantity > 0 %}
+          <p class="mb-2">We have fulfilled {{ item.successfully_fulfilled_quantity }} items of your order.</p>
+          <p class="mb-2">Tracking: {{ item.fulfillment.tracking_company }}</p>
+          <p class="mb-4">
+            {{ item.fulfillment.tracking_number }}
+          </p>
+          <a
+            href="{{ item.fulfillment.tracking_url }}"
+            class="mb-2 text-white bg-gray-900 hover:bg-gray-700 rounded px-4 py-3"
+          >
+            Track Order
+          </a>
+        {% else %}
+          <p class="text-gray-500">This item is not yet fulfilled.</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+  <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-12 border border-gray-200 rounded-sm p-4 md:p-12 my-6 bg-gray-50">
+    <div>
+      <h1 class="font-medium mb-4">Billing Address</h1>
+      {{ order.billing_address | format_address }}
+    </div>
+    <div>
+      <h1 class="font-medium mb-4">Payment Information</h1>
+      {% for transaction in order.transactions %}
+        <div class="mb-4">
+          {% assign credit_card = transaction.payment_details %}
+          {% if credit_card.credit_card_company != blank %}
+            <p>{{ credit_card.credit_card_company }}</p>
+            <p>{{ credit_card.credit_card_number }}</p>
+            <span class="bg-gray-700 rounded-full text-sm px-4 py-1 text-white">
+              {{ transaction.status_label }}
+            </span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div>
+      <table class="table-auto w-full mb-4">
+        <tbody>
+          <tr>
+            <td class="border border-gray-200 px-4 py-2">Subtotal</td>
+            <td class="border border-gray-200 px-4 py-2">{{ order.subtotal_price | money }}</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-200 px-4 py-2">Shipping</td>
+            <td class="border border-gray-200 px-4 py-2">{{ order.shipping_price | money }}</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-200 px-4 py-2">Total</td>
+            <td class="border border-gray-200 px-4 py-2">{{ order.total_price | money }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@
       {% else %}
         {% assign collection_image = collection.products.first.image %}
       {% endif %}
-      <img src="{{ collection_image | img_url: 'medium' }}" alt="{{ collection.title | escape }}">
+      <img src="{{ collection_image | image_url: width: 240, height: 240 }}" alt="{{ collection.title | escape }}">
     </a>
     {{ collection.title }}    
   {% endif %}

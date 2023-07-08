@@ -5,7 +5,7 @@
       <a href="{{ product.url }}">
         <h1>{{ product.title }}</h1>
         <div class="img-wrap radius">
-          <img class="zoom" src="{{ product.featured_image | img_url: 'medium' }}">
+          <img class="zoom" src="{{ product.featured_image | image_url: width: 240, height: 240 }}">
         </div>
       </a>
     </div>
@@ -19,7 +19,7 @@
       {% unless product.has_only_default_variant %}
         <div class="variant-select">
           {% for option in product.options_with_values %}
-            <div class="option-{{forloop.index}}">
+            <div class="option-{{ forloop.index }}">
               <label
                 for="Option-{{ product.id }}-{{ forloop.index }}"
               >
@@ -47,7 +47,17 @@
         </div>
       {% endunless %}
       <input type="hidden" name="id" :value="products[{{ current_index }}].current_variant_id">
-      <button class="atc-button">Add to Cart</button>
+      {% if template == 'cart' %}
+        <button
+          @click.prevent="addToCart(products[{{ current_index }}].current_variant_id)"
+          type="button"
+          class="atc-button"
+        >
+          Add to Cart
+        </button>
+      {% else %}
+        <button type="submit" class="atc-button">Add to Cart</button>
+      {% endif %}
     </div>
   {% endform %}
 </div>

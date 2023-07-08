@@ -29,7 +29,7 @@
               {% unless product.has_only_default_variant %}
                 <div id="variant-select">
                   {% for option in product.options_with_values %}
-                    <div class="option-{{forloop.index}}">
+                    <div class="option-{{ forloop.index }}">
                       <label
                         for="Option-{{ product.id }}-{{ forloop.index }}"
                       >
@@ -77,11 +77,7 @@
 </div>
 <script>
   
-  
-  
-  
-  
-  
+
     const ProductTemplate = Vue.createApp({
       delimiters: ['${', '}'],
       data() {
@@ -96,7 +92,7 @@
             ],
             variants: [
               {%- for variant in product.variants -%}
-                {% assign img_url = variant.image.src | img_url: 'medium', scale: 2 %}
+                {% assign img_url = variant.image.src | image_url: width: 480, height: 480 %}
                 {
                   id: "{{ variant.id }}",
                   available: {{ variant.available }},
@@ -107,7 +103,7 @@
                 },
               {%- endfor -%}
             ],
-            fallback_image: "{{ product.featured_image | img_url: 'medium', scale:2 }}",
+            fallback_image: "{{ product.featured_image | image_url: width: 480, height: 480 }}",
         };
       },
       computed: {
@@ -130,44 +126,8 @@
       // this.current_variant_compare_price = current_variant.compare_at_price;
        window.history.replaceState({}, '', `${this.product_url}?variant=${current_variant.id}`);
         },
-     
-       /* addToCart(event) {
-          event.preventDefault();
-          let selectedVariant;
-          this.variants.forEach((variant, index) => {
-            if (variant.options.toString() == this.selected.toString()) {
-              selectedVariant = variant;
-            }
-          });
-          console.log({ selectedVariant });
-          let data = {
-            id: selectedVariant.id,
-            quantity: 1,
-          };
-          console.log(data);
-
-          fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          })
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }, */
       },
     }).mount('#product-template');
-
-
-
-
-
 
 </script>
 

@@ -2,19 +2,24 @@
   "sections": {
     "template": {
       "type": "template-cart",
-      "blocks": {
-        "subtotal": {
-          "type": "subtotal"
-        },
-        "update-button": {
-          "type": "update_button"
-        },
-        "checkout-button": {
-          "type": "checkout_button"
-        }
-      },
-      "block_order": ["subtotal","update-button","checkout-button"]
+      "settings": {
+        "checkout_bg_clr": "#000",
+        "checkout_fnt_clr": "#fff",
+        "checkout_bg_clr_h": "#000",
+        "checkout_fnt_clr_h": "#fff"
+      }
+    },
+    "e9be8084-e34a-446f-9aff-3143a1e04142": {
+      "type": "recommended_products",
+      "settings": {
+        "title": "You May Also Like...",
+        "sel_collection": "bird-houses",
+        "max_products": 4
+      }
     }
   },
-  "order": ["template"]
+  "order": [
+    "template",
+    "e9be8084-e34a-446f-9aff-3143a1e04142"
+  ]
 }

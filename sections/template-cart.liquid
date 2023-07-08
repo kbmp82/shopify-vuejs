@@ -1,5 +1,4 @@
 {{ 'cart_page.css' | asset_url | stylesheet_tag }}
-
 <div id="cart-template">
   <div class="container">
     <h1>Your cart</h1>
@@ -14,7 +13,6 @@
                 <span>Quantity</span>
                 <span>Total</span>
               </div>
-
               <div class="cart-row" v-for="(item, index) in cart.items">
                 <div class="product">
                   <img :src="item.featured_image.url" :alt="item.featured_image.alt">
@@ -25,7 +23,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="price">${ formatPrice(item.price) }</div>
+                <div class="price">${ item.price }</div>
                 <div class="quantity">
                   <input
                     class="quantity"
@@ -36,7 +34,7 @@
                     @change="updateCartItem(index)"
                   >
                 </div>
-                <div class="total-price">${ formatPrice(item.final_line_price) }</div>
+                <div class="total-price">${ item.final_line_price }</div>
               </div>
               <div class="cart-footer">
                 <div class="subtotal-section">
@@ -50,7 +48,7 @@
                     ></textarea>
                   </div>
                   <div class="checkout-section">
-                    <div class="cart-subtotal"><span>Subtotal: </span>${ formatPrice(cart.total_price)}</div>
+                    <div class="cart-subtotal"><span>Subtotal: </span>${ cart.items_subtotal_price}</div>
                     <button
                       type="submit"
                       name="checkout"
@@ -86,74 +84,34 @@
    }
 {% endstyle %}
 <script>
-  const CartTemplate = Vue.createApp({
+  const CartTemplateOptions = {
+    store,
     delimiters: ['${', '}'],
     data() {
       return {
         loading: true,
-        cart: {
-          items: [],
-        },
       };
     },
     created() {
-      this.getCart();
+      store.dispatch('getCart').then(() => (this.loading = false));
+    },
+    computed: {
+      cart() {
+        return store.getters.cart;
+      },
     },
     methods: {
-      getCart(data) {
-        fetch('/cart.js', {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((response) => response.json())
-          .then((json) => {
-            this.cart = json;
-            this.loading = false;
-          });
-      },
-      formatPrice(price) {
-        return `$${(price / 100).toFixed(2)}`;
-      },
       updateCartItem(index) {
-        const id = this.cart.items[index].variant_id;
-        const qty = parseInt(this.cart.items[index].quantity);
-
-        let data = {
-          updates: {
-            [id]: qty,
-          },
-        };
-
-        fetch('/cart/update.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }).then(() => this.getCart());
+        store.dispatch('updateCart', index);
       },
       removeCartItem(index) {
-        const id = this.cart.items[index].variant_id;
-
-        let data = {
-          updates: {
-            [id]: 0,
-          },
-        };
-
-        fetch('/cart/update.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }).then(() => this.getCart());
+        store.dispatch('removeCartItem', index);
       },
     },
-  }).mount('#cart-template');
+  };
+  const Cart = Vue.createApp(CartTemplateOptions);
+  Cart.mount('#cart-template');
+  Cart.use(store);
 </script>
 
 {% schema %}

@@ -1,7 +1,7 @@
 {{ 'header.css' | asset_url | stylesheet_tag }}
 {% assign se_stts = section.settings %}
-{% assign sid = section.id %}
-<div class="header">
+
+<div id="header" class="header">
   <div class="container">
     <nav class="">
       <a href="{{ routes.root_url }}" class="logo">
@@ -37,7 +37,10 @@
           {%- endfor %}
         </ul>
         <div class="shop-icons">
-          <a href="{{ routes.cart_url }}">{% render 'icon_cart' %}</a>
+          <a class="cart-icon" href="{{ routes.cart_url }}">
+            {%- render 'icon_cart' -%}
+            <span class="cart-total">${cartTotal}</span></a
+          >
           {% unless shop.customer_accounts_enabled == false %}
             <div class="account">
               {%- if shop.customer_accounts_enabled -%}
@@ -53,7 +56,7 @@
                     </li>
                   {%- else -%}
                     <li>
-                      <a href="{{ routes.account_login_url}}" id="customer_login_link">Log In</a>
+                      <a href="{{ routes.account_login_url }}" id="customer_login_link">Log In</a>
                     </li>
                     <li>
                       {{ 'Create account' | customer_register_link }}
@@ -91,6 +94,28 @@
     }
   }
 {% endstyle %}
+
+<script>
+  const HeaderOptions = {
+    store,
+    delimiters: ['${', '}'],
+    data() {
+      return {};
+    },
+    created() {
+      store.dispatch('getCart');
+    },
+    computed: {
+      cartTotal() {
+        return store.getters.cartTotal;
+      },
+    },
+  };
+
+  const Header = Vue.createApp(HeaderOptions);
+  Header.mount('#header');
+  Header.use(store);
+</script>
 {% schema %}
 {
   "name": "Header",

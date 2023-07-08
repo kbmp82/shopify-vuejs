@@ -34,11 +34,13 @@
     <script
       src="https://unpkg.com/vue@3.0.5"
     ></script>
+    <script src="https://unpkg.com/vuex@4.0.0/dist/vuex.global.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.7.0.js"
       integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
       crossorigin="anonymous"
     ></script>
+    {{ 'store.js' | asset_url | script_tag }}
     {{ 'reset.css' | asset_url | stylesheet_tag }}
     {{ 'theme.css' | asset_url | stylesheet_tag }}
   </head>

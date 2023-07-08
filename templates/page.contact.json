@@ -16,5 +16,9 @@
       "type": "contact-form"
     }
   },
-  "order": ["heading","template", "contact-form"]
+  "order": [
+    "heading",
+    "template",
+    "contact-form"
+  ]
 }

@@ -1,5 +1,6 @@
 {{ 'recommended_products.css' | asset_url | stylesheet_tag }}
 {{ 'product_card.css' | asset_url | stylesheet_tag }}
+
 <div id="recommended-products_{{ section.id }}">
   <div class="container" v-if="products.length > 0">
     <div class="products">
@@ -19,7 +20,13 @@
 </div>
 <script>
   
-  const recommendedProducts = Vue.createApp({
+  
+  
+  
+  
+
+  const RecommendedProductsOptions ={
+    store,
     delimiters: ['${', '}'],
     data() {
       return {
@@ -27,7 +34,7 @@
             {%- for product in collections[section.settings.sel_collection].products limit: section.settings.max_products -%}
                 {
                     title: "{{ product.title }}",
-                    image: "{{ product.featured_image | img_url: 'medium'  }}",
+                    image: "{{ product.featured_image | image_url: width: 240, height: 240 }}",
                     variant_selection: [
                         {%- for option in product.options_with_values -%}
                         "{{ option.selected_value }}"
@@ -48,7 +55,7 @@
                         {%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}
                         {%- endunless -%}
                             ],
-                    price: "{{ product.price  | money }}",
+                    price: "{{ product.price | money }}",
                     compare_at_price: "{{ product.compare_at_price | money }}",
                     id: "{{ product.id }}",
                     current_variant_id: "{{ product.selected_or_first_available_variant.id }}"
@@ -59,9 +66,6 @@
         ],
       };
     },
-    created(){
-        console.log(this.products)
-  },
     methods: {
       formatPrice(price) {
       let priceAsNum = parseInt(price);
@@ -75,10 +79,25 @@
         this.products[index].price = currentVariant.price;
         this.products[index].compare_at_price = currentVariant.compare_at_price
         this.products[index].current_variant_id = currentVariant.id
+        },
+        addToCart(variant){
+          let data = {
+            id: variant,
+            quantity: 1,
+          };
+         
+            store.dispatch('addItemToCart', data);
         }
     }
 
-  }).mount('#recommended-products_{{ section.id }}');
+  }
+  const RecommendedProducts =  Vue.createApp(RecommendedProductsOptions);
+  RecommendedProducts.mount('#recommended-products_{{ section.id }}');
+  RecommendedProducts.use(store);
+
+
+
+
 
 
 </script>

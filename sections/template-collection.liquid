@@ -25,7 +25,7 @@ const recommendedProducts = Vue.createApp({
         {% for product in collection.products limit: section.settings.max_products %}
               {
                   title: "{{ product.title }}",
-                  image: "{{ product.featured_image | img_url: 'medium'  }}",
+                  image: "{{ product.featured_image | image_url: width: 240, height: 240 }}",
                   variant_selection: [
                       {%- for option in product.options_with_values -%}
                       "{{ option.selected_value }}"
@@ -46,7 +46,7 @@ const recommendedProducts = Vue.createApp({
                       {%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}
                       {%- endunless -%}
                           ],
-                  price: "{{ product.price  | money }}",
+                  price: "{{ product.price | money }}",
                   compare_at_price: "{{ product.compare_at_price | money }}",
                   id: "{{ product.id }}",
                   current_variant_id: "{{ product.selected_or_first_available_variant.id }}"

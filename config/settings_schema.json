@@ -1,11 +1,12 @@
-[  {
-  "name": "theme_info",
-  "theme_name": "Bird House VueJS ",
-  "theme_version": "1.0.0",
-  "theme_author": "Kevin Brown",
-  "theme_documentation_url": "https://github.com/kbmp82/shopify-vuejs.git",
-  "theme_support_url": "https://github.com/kbmp82/shopify-vuejs/issues"
-},
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Bird House VueJS ",
+    "theme_version": "1.0.0",
+    "theme_author": "Kevin Brown",
+    "theme_documentation_url": "https://github.com/kbmp82/shopify-vuejs.git",
+    "theme_support_url": "https://github.com/kbmp82/shopify-vuejs/issues"
+  },
   {
     "name": "Breadcrumbs",
     "settings": [
@@ -39,12 +40,11 @@
         "info": "Relates to pages only."
       }
     ]
-    
   },
-    {
-        "name": "Buttons",
-        "settings": [
-    {
+  {
+    "name": "Buttons",
+    "settings": [
+      {
         "type": "color",
         "id": "button_bg_clr",
         "label": "Button color",
@@ -73,5 +73,5 @@
         "default": "#fff"
       }
     ]
-    }
+  }
 ]
