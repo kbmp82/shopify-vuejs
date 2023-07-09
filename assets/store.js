@@ -4,7 +4,7 @@ const store = Vuex.createStore({
       cart: {
         items: [],
       },
-      miniCartOpen: true
+      miniCartOpen: false
     };
   },
   mutations: {
