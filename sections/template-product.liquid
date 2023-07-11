@@ -4,7 +4,18 @@
   <div class="product-wrap">
     <div class="product-img">
       <transition name="fade">
-        <img :src="currentVariant.image || fallback_image" :key="currentVariant.image || fallback_image" alt="">
+        <img
+          :key="currentVariant.image || fallback_image"
+          :src="currentVariant.image || fallback_image"
+          :data-src="currentVariant.image || fallback_image"
+          data-widths="[240, 560, 720, 1080]"
+          data-sizes="auto"
+          data-parent-fit="cover"
+          :alt="currentVariant.image.alt || fallback_image.alt"
+        >
+        <!--
+          <img :src="currentVariant.image || fallback_image" :key="currentVariant.image || fallback_image" alt="">
+        -->
       </transition>
     </div>
     <div class="product-summary">
@@ -77,6 +88,7 @@
 </div>
 <script>
   
+  
     const ProductTemplate = Vue.createApp({
       delimiters: ['${', '}'],
       data() {
@@ -142,6 +154,7 @@
       },
 
     }).mount('#product-template');
+
 
 </script>
 
