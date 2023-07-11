@@ -5,7 +5,16 @@
       <a href="{{ product.url }}">
         <h1>{{ product.title }}</h1>
         <div class="img-wrap radius">
-          <img class="zoom" src="{{ product.featured_image | image_url: width: 240, height: 240 }}">
+          <img
+            src="{{ product.featured_image | image_url: width: 240, height: 240  }}"
+            data-src="{{ product.featured_image | image_url }}"
+            data-widths="[240, 560, 720, 1080]"
+            data-sizes="auto"
+            data-parent-fit="cover"
+            class="zoom"
+            alt="{{ se_stts.image.alt | escape }}"
+          >
+          <!-- <img class="zoom" src="{{ product.featured_image | image_url: width: 240, height: 240 }}"> -->
         </div>
       </a>
     </div>
